@@ -3,15 +3,16 @@ canvas.width = 700; // canvas needs pixel modifier size not only css size
 canvas.height = 700;
 
 const context = canvas.getContext("2d"); // context handles pixels in canvas
-context.strokeStyle = "#2c2c2c"; // line color
+context.strokeStyle = "#2c2c2c"; // default line color
 context.lineWidth = 2.5;
+
+const colors = document.getElementsByClassName("jsColor")
 
 let painting = false;
 
 function startPainting() {
     painting = true;
 }
-
 
 function stopPainting() {
     painting = false;
@@ -31,9 +32,9 @@ function onMouseMove(event) {
     }
 }
 
-function onMouseDown(event) {
-    console.log(event);
-    painting = true;
+function handleColorClick(event) {
+    const color = event.target.style.backgroundColor;
+    context.strokeStyle = color;
 }
 
 if (canvas) {
@@ -42,3 +43,5 @@ if (canvas) {
     canvas.addEventListener("mouseup", stopPainting); // when mouse unclicked
     canvas.addEventListener("mouseleave", stopPainting); // when mouse leave the canvas
 }
+
+Array.from(colors).forEach(color => color.addEventListener("click", handleColorClick));
